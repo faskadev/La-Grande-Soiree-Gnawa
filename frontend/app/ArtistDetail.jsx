@@ -1,0 +1,74 @@
+import React from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import dayjs from 'dayjs';
+
+const API_URL = 'https://your-backend.example.com/api';
+
+const fetchArtist = async (id) => {
+  const res = await axios.get(`${API_URL}/artists/${id}`);
+  return res.data;
+};
+
+export default function ArtistDetail() {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { artistId } = route.params;
+
+  const { data: artist, isLoading } = useQuery({
+    queryKey: ['artist', artistId],
+    queryFn: () => fetchArtist(artistId),
+  });
+
+  if (isLoading || !artist) {
+    return (
+      <View style={styles.center}>
+        <Text>Loading artist...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView style={styles.container}>
+      <Image source={{ uri: artist.photo }} style={styles.photo} />
+
+      <Text style={styles.name}>{artist.name}</Text>
+      <Text style={styles.role}>{artist.role}</Text>
+
+      <Text style={styles.section}>Performance Time</Text>
+      <Text style={styles.time}>{dayjs(artist.performanceTime).format('HH:mm')}</Text>
+
+      <Text style={styles.section}>Biography</Text>
+      <Text style={styles.desc}>{artist.description}</Text>
+
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => navigation.navigate('BookingForm', { artist })}
+      >
+        <Text style={styles.btnText}>Réserver</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#fff' },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  photo: { width: '100%', height: 260 },
+  name: { fontSize: 24, fontWeight: '700', margin: 15 },
+  role: { fontSize: 16, marginHorizontal: 15, color: '#666' },
+  section: { marginTop: 20, marginHorizontal: 15, fontSize: 19, fontWeight: '600' },
+  desc: { margin: 15, fontSize: 14, color: '#444' },
+  time: { marginHorizontal: 15, fontSize: 16 },
+  btn: {
+    alignSelf: 'center',
+    backgroundColor: '#222',
+    padding: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginVertical: 30,
+  },
+  btnText: { color: '#fff', fontSize: 18 },
+});
