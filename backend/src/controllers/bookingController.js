@@ -26,7 +26,9 @@ exports.createBooking = async (req, res) => {
       confirmationCode
     });
 
-    res.status(201).json(booking);
+    const out = booking.toJSON ? booking.toJSON() : booking;
+    out.code = out.confirmationCode;
+    res.status(201).json(out);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

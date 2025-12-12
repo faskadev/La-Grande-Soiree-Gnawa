@@ -11,20 +11,18 @@ import {
   Alert,
   Share,
 } from 'react-native';
-import axios from 'axios';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import { instance } from '../services/instance';
 
 // --- Constants ---
-// Make sure to set this in your constants file and import instead.
-const API_URL = 'https://your-backend.example.com/api'; // <-- replace with your backend URL
 const CACHE_KEY = 'artists_cache_v1';
 
 // --- Helper: fetch artists ---
 const fetchArtists = async () => {
-  const res = await axios.get(`${API_URL}/artists`);
+  const res = await instance.get('/artists');
   return res.data; // expected: array of artist objects
 };
 
@@ -107,13 +105,13 @@ export default function ArtistsList() {
     return (
       <TouchableOpacity style={styles.card} onPress={() => openArtist(item)}>
         <Image
-          source={item.photo ? { uri: item.photo } : require('../assets/placeholder.gif')}
+          source={item.photoUrl ? { uri: item.photoUrl } : require('../assets/placeholder.gif')}
           style={styles.avatar}
           resizeMode="cover"
         />
         <View style={styles.info}>
           <Text numberOfLines={1} style={styles.name}>{item.name}</Text>
-          <Text numberOfLines={1} style={styles.sub}>{item.role ?? 'Maestro Gnawa'}</Text>
+          <Text numberOfLines={1} style={styles.sub}>{item.genre ?? 'Maestro Gnawa'}</Text>
           {item.performanceTime ? (
             <Text style={styles.time}>{dayjs(item.performanceTime).format('HH:mm')}</Text>
           ) : null}

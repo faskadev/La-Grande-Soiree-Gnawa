@@ -2,13 +2,11 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import dayjs from 'dayjs';
-
-const API_URL = 'https://your-backend.example.com/api';
+import { instance } from '../services/instance';
 
 const fetchArtist = async (id) => {
-  const res = await axios.get(`${API_URL}/artists/${id}`);
+  const res = await instance.get(`/artists/${id}`);
   return res.data;
 };
 
@@ -32,16 +30,16 @@ export default function ArtistDetail() {
 
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: artist.photo }} style={styles.photo} />
+      <Image source={{ uri: artist.photoUrl }} style={styles.photo} />
 
       <Text style={styles.name}>{artist.name}</Text>
-      <Text style={styles.role}>{artist.role}</Text>
+      <Text style={styles.role}>{artist.genre}</Text>
 
       <Text style={styles.section}>Performance Time</Text>
       <Text style={styles.time}>{dayjs(artist.performanceTime).format('HH:mm')}</Text>
 
       <Text style={styles.section}>Biography</Text>
-      <Text style={styles.desc}>{artist.description}</Text>
+      <Text style={styles.desc}>{artist.bio}</Text>
 
       <TouchableOpacity
         style={styles.btn}

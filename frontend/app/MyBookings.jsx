@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import axios from 'axios';
-
-const API_URL = 'https://your-backend.example.com/api';
+import { instance } from '../services/instance';
 
 export default function MyBookings() {
   const [email, setEmail] = useState('');
@@ -12,7 +10,7 @@ export default function MyBookings() {
     if (!email) return;
 
     try {
-      const res = await axios.get(`${API_URL}/bookings/email/${email}`);
+      const res = await instance.get(`/bookings/email/${email}`);
       setBookings(res.data);
     } catch (err) {
       alert('Aucune réservation trouvée.');
@@ -40,8 +38,10 @@ export default function MyBookings() {
         style={{ marginTop: 20 }}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.code}>Code : {item.code}</Text>
-            <Text>Artiste : {item.artist?.name}</Text>
+            <Text style={styles.code}>Code : {item.code || item.confirmationCode}</Text>
+            <Text>Email : {item.email}</Text>
+            <Text>Tickets : {item.ticketCount}</Text>
+            <Text>Total : {item.totalPrice} DH</Text>
             <Text>Date : {item.createdAt?.slice(0, 10)}</Text>
           </View>
         )}

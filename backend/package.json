@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "seed:artists": "node src/seeds/artists.js",
-  "seed:events": "node src/seeds/events.js",
+    "seed:events": "node src/seeds/events.js",
     "dev": "node --watch src/server.js"
   },
   "keywords": [],

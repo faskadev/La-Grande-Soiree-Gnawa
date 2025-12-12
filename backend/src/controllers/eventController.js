@@ -2,7 +2,7 @@ const { EventInfo } = require('../models');
 
 exports.getEventInfo = async (req, res) => {
   try {
-    const event = await EventInfo.findAll();
+    const event = await EventInfo.findOne();
     if (!event) {
       return res.status(404).json({ message: 'Event info not found' });
     }
