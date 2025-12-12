@@ -17,13 +17,13 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { instance } from '../services/instance';
 
-// --- Constants ---
+
 const CACHE_KEY = 'artists_cache_v1';
 
-// --- Helper: fetch artists ---
+
 const fetchArtists = async () => {
   const res = await instance.get('/artists');
-  return res.data; // expected: array of artist objects
+  return res.data; 
 };
 
 export default function ArtistsList() {
