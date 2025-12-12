@@ -6,7 +6,7 @@ exports.getEventInfo = async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: 'Event info not found' });
     }
-    res.json(event);
+    return res.json(event);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

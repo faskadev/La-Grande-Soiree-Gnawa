@@ -14,7 +14,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-app.use('/api/event', eventRoutes);
+app.use('/api/events', eventRoutes);
 app.use('/api/artists', artistRoutes);
 app.use('/api/bookings', bookingRoutes);
 
