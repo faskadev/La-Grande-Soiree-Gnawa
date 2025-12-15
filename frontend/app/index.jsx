@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flex: 1,
     marginTop: 40,
+
   },
 
   bg: {
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#ffffffff",
-    marginBottom: 12,
+    marginBottom: 18,
     marginTop: 30,
   },
 
