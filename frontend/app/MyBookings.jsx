@@ -51,8 +51,15 @@ export default function MyBookings() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flex: 1 },
-  title: { fontSize: 22, fontWeight: '700', marginBottom: 15 },
+  container: { 
+    padding: 20, 
+    flex: 1 
+  },
+  title: { 
+    fontSize: 22, 
+    fontWeight: '700', 
+    marginBottom: 15 
+  },
   input: {
     backgroundColor: '#eee',
     padding: 12,
@@ -64,12 +71,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 10,
   },
-  btnText: { color: '#fff', textAlign: 'center' },
+  btnText: { 
+    color: '#fff', 
+    textAlign: 'center' 
+  },
   card: {
     backgroundColor: '#fafafa',
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
   },
-  code: { fontWeight: '700', marginBottom: 5 },
+  code: { 
+    fontWeight: '700', 
+    marginBottom: 5 
+  },
+
 });

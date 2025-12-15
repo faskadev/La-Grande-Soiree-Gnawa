@@ -54,7 +54,8 @@ export default function BookingForm() {
     >
       <View style={styles.BookingForm}>
         <View style={styles.container}>
-          <Text style={styles.title}>Réserver pour {artist.name}</Text>
+          <Text style={styles.title}>Réserver pour </Text>
+          <Text style={styles.artistname}>{artist.name}</Text>
 
           <TextInput
             placeholder="Nom complet"
@@ -109,14 +110,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "700",
-    marginBottom: 20,
+    marginBottom: 15,
+    color: "#111",
+    textAlign: "center",
+  },
+    artistname: {
+    fontSize: 40,
+    fontWeight: "700",
+    marginBottom: 15,
+    color: "#ffffffff",
+    textAlign: "center",
   },
   input: {
     backgroundColor: "#eee",
     padding: 12,
     borderRadius: 8,
+    borderColor: "#000000ff",
+    borderWidth: 2,
     marginBottom: 12,
     marginTop: 20,
   },
