@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,20 +10,18 @@ import {
   RefreshControl,
   Alert,
   Share,
-} from 'react-native';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import dayjs from 'dayjs';
-import { instance } from '../services/instance';
+} from "react-native";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import dayjs from "dayjs";
+import { instance } from "../services/instance";
 
-
-const CACHE_KEY = 'artists_cache_v1';
-
+const CACHE_KEY = "artists_cache_v1";
 
 const fetchArtists = async () => {
-  const res = await instance.get('/artists');
-  return res.data; 
+  const res = await instance.get("/artists");
+  return res.data;
 };
 
 export default function ArtistsList() {
@@ -39,7 +37,7 @@ export default function ArtistsList() {
     error,
     refetch,
   } = useQuery({
-    queryKey: ['artists'],
+    queryKey: ["artists"],
     queryFn: fetchArtists,
     // keep data while refetching, short stale time
     staleTime: 1000 * 60 * 2, // 2 minutes
@@ -47,10 +45,13 @@ export default function ArtistsList() {
     onSuccess: async (data) => {
       // cache to AsyncStorage for offline fallback
       try {
-        await AsyncStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data }));
+        await AsyncStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ ts: Date.now(), data })
+        );
       } catch (e) {
         // silently ignore storage error
-        console.warn('Failed saving artists cache', e?.message ?? e);
+        console.warn("Failed saving artists cache", e?.message ?? e);
       }
     },
   });
@@ -64,10 +65,10 @@ export default function ArtistsList() {
           if (raw) {
             const parsed = JSON.parse(raw);
             // populate react-query cache so UI reads from it
-            queryClient.setQueryData(['artists'], parsed.data);
+            queryClient.setQueryData(["artists"], parsed.data);
           }
         } catch (e) {
-          console.warn('Failed reading artists cache', e?.message ?? e);
+          console.warn("Failed reading artists cache", e?.message ?? e);
         }
       })();
     }
@@ -79,7 +80,7 @@ export default function ArtistsList() {
       await refetch();
     } catch (e) {
       // refetch will surface errors via isError
-      console.warn('Refresh failed', e?.message ?? e);
+      console.warn("Refresh failed", e?.message ?? e);
     } finally {
       setIsRefreshing(false);
     }
@@ -87,17 +88,18 @@ export default function ArtistsList() {
 
   const openArtist = (artist) => {
     // navigate to ArtistDetail screen
-    navigation.navigate('ArtistDetail', { artistId: artist.id });
+    navigation.navigate("ArtistDetail", { artistId: artist.id });
   };
 
   const onShareArtist = async (artist) => {
     try {
-      // deep link format: myapp://artists/:id  (configure linking in navigation)
       const link = `myapp://artists/${artist.id}`;
-      const message = `${artist.name} — ${artist.genre ?? 'Gnawa'}\nSee details & book: ${link}`;
+      const message = `${artist.name} — ${
+        artist.genre ?? "Gnawa"
+      }\nSee details & book: ${link}`;
       await Share.share({ message });
     } catch (err) {
-      Alert.alert('Share failed', (err && err.message) || 'Unable to share');
+      Alert.alert("Share failed", (err && err.message) || "Unable to share");
     }
   };
 
@@ -105,19 +107,30 @@ export default function ArtistsList() {
     return (
       <TouchableOpacity style={styles.card} onPress={() => openArtist(item)}>
         <Image
-          source={item.photoUrl ? { uri: item.photoUrl } : require('../assets/placeholder.gif')}
+          source={
+            item.photoUrl
+              ? { uri: item.photoUrl }
+              : require("../assets/placeholder.gif")
+          }
           style={styles.avatar}
           resizeMode="cover"
         />
         <View style={styles.info}>
-          <Text numberOfLines={1} style={styles.name}>{item.name}</Text>
-          <Text numberOfLines={1} style={styles.sub}>{item.genre ?? 'Maestro Gnawa'}</Text>
+          <Text numberOfLines={1} style={styles.name}>
+            {item.name}
+          </Text>
+          <Text numberOfLines={1} style={styles.sub}>
+            {item.genre ?? "Maestro Gnawa"}
+          </Text>
           {item.performanceTime ? (
-            <Text style={styles.time}>{dayjs(item.performanceTime).format('HH:mm')}</Text>
+            <Text style={styles.time}>{item.performanceTime}</Text>
           ) : null}
         </View>
-        <TouchableOpacity style={styles.shareButton} onPress={() => onShareArtist(item)}>
-          <Text style={styles.shareText}>Share</Text>
+        <TouchableOpacity
+          style={styles.shareButton}
+          onPress={() => onShareArtist(item)}
+        >
+          <Text style={styles.shareText}>Detail</Text>
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -150,7 +163,9 @@ export default function ArtistsList() {
         keyExtractor={(i) => String(i.id)}
         renderItem={renderItem}
         contentContainerStyle={{ padding: 12 }}
-        refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+        }
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
         ListEmptyComponent={() => (
           <View style={styles.center}>
@@ -163,37 +178,78 @@ export default function ArtistsList() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  container: {
+    flex: 1,
+    backgroundColor: "#ddc5c5ff",
+    marginTop: 10,
+  },
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fafafa',
-    borderRadius: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fafafa",
+    borderRadius: 20,
+    borderColor: "#e7c427ff",
+    borderWidth: 2,
     padding: 12,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 6,
     elevation: 2,
   },
-  avatar: { width: 72, height: 72, borderRadius: 8, marginRight: 12, backgroundColor: '#eee' },
-  info: { flex: 1 },
-  name: { fontSize: 16, fontWeight: '700' },
-  sub: { fontSize: 13, color: '#666', marginTop: 2 },
-  time: { marginTop: 6, fontSize: 12, color: '#444' },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    marginRight: 12,
+    backgroundColor: "#eee",
+  },
+  bg: {
+    width: "100%",
+    flex: 1,
+    paddingBottom: 40,
+  },
+  info: {
+    flex: 1,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  sub: {
+    fontSize: 13,
+    color: "#666",
+    marginTop: 2,
+  },
+  time: {
+    marginTop: 6,
+    fontSize: 12,
+    color: "#444",
+  },
   shareButton: {
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#ddd',
+    borderWidth: 2,
+    backgroundColor: "#e7c427ff",
+    borderColor: "#e7c427ff",
   },
-  shareText: { fontSize: 12 },
+  shareText: {
+    fontSize: 12,
+    color: "#fff",
+    fontWeight: "600",
+  },
   retryBtn: {
-    backgroundColor: '#111',
+    backgroundColor: "#111",
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 8,
   },
-  retryText: { color: '#fff' },
+  retryText: {
+    color: "#fff",
+  },
 });

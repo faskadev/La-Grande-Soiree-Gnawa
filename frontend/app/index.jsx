@@ -30,20 +30,15 @@ return (
     style={styles.bg}
     resizeMode="cover"
   >
-    <ScrollView contentContainerStyle={styles.scrollContent}>
-      
-        
+    <ScrollView contentContainerStyle={styles.scrollContent}> 
         
         <Image
           source={{ uri: events.bannerUrl }}
           style={styles.bannerUrl}
           resizeMode="cover"
         />
-
-        
+   
         <Text style={styles.title}>{events.title}</Text>
-
-        
         <Text style={styles.desc}>{events.description}</Text>
 
       <View style={styles.overlay}> 
@@ -64,12 +59,11 @@ return (
           </View>
         </View>
 
-        
         <TouchableOpacity
           style={styles.btn}
           onPress={() => navigation.navigate("ArtistsList")}
         >
-          <Text style={styles.btnText}>Voir les artistes</Text>
+          <Text style={styles.btnText}>Découvrir les artistes</Text>
         </TouchableOpacity>
 
       </View>
@@ -114,15 +108,15 @@ const styles = StyleSheet.create({
     fontSize: 55,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#fff",
+    color: "#e7c427ff",
     marginBottom: 12,
     marginTop: 30,
   },
 
   desc: {
-    fontSize: 16,
+    fontSize: 20,
     textAlign: "center",
-    color: "#eee",
+    color: "#ffffffff",
     marginBottom: 20,
     paddingHorizontal: 10,
   },
@@ -159,7 +153,7 @@ const styles = StyleSheet.create({
 
   btn: {
     marginTop: 10,
-    backgroundColor: "#316BFF",
+    backgroundColor: "#e7c427ff",
     padding: 14,
     borderRadius: 10,
     alignItems: "center",
