@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import { instance } from "../services/instance";
 
 const fetchArtist = async (id) => {
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffffff",
-    
+
   },
   center: {
     flex: 1,

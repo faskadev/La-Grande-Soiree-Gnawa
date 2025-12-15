@@ -15,7 +15,6 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import dayjs from "dayjs";
 import { instance } from "../services/instance";
 
 const CACHE_KEY = "artists_cache_v1";
@@ -40,8 +39,8 @@ export default function ArtistsList() {
   } = useQuery({
     queryKey: ["artists"],
     queryFn: fetchArtists,
-    // keep data while refetching, short stale time
-    staleTime: 1000 * 60 * 2, // 2 minutes
+    
+    staleTime: 1000 * 60 * 2, 
     retry: 1,
     onSuccess: async (data) => {
       // cache to AsyncStorage for offline fallback
@@ -51,13 +50,13 @@ export default function ArtistsList() {
           JSON.stringify({ ts: Date.now(), data })
         );
       } catch (e) {
-        // silently ignore storage error
+        
         console.warn("Failed saving artists cache", e?.message ?? e);
       }
     },
   });
 
-  // Offline fallback: load cached artists if network fails
+  
   useEffect(() => {
     if (isError) {
       (async () => {
@@ -65,7 +64,7 @@ export default function ArtistsList() {
           const raw = await AsyncStorage.getItem(CACHE_KEY);
           if (raw) {
             const parsed = JSON.parse(raw);
-            // populate react-query cache so UI reads from it
+            
             queryClient.setQueryData(["artists"], parsed.data);
           }
         } catch (e) {
@@ -80,7 +79,7 @@ export default function ArtistsList() {
     try {
       await refetch();
     } catch (e) {
-      // refetch will surface errors via isError
+      
       console.warn("Refresh failed", e?.message ?? e);
     } finally {
       setIsRefreshing(false);
@@ -88,7 +87,7 @@ export default function ArtistsList() {
   }, []);
 
   const openArtist = (artist) => {
-    // navigate to ArtistDetail screen
+    
     navigation.navigate("ArtistDetail", { artistId: artist.id });
   };
 
