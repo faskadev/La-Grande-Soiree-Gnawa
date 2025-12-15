@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   RefreshControl,
+  ImageBackground,
   Alert,
   Share,
 } from "react-native";
@@ -157,6 +158,10 @@ export default function ArtistsList() {
   }
 
   return (
+    <ImageBackground
+    source={require("../assets/images/background.png")}
+    style={styles.bg}
+    resizeMode="cover">
     <View style={styles.container}>
       <FlatList
         data={artists || []}
@@ -174,6 +179,7 @@ export default function ArtistsList() {
         )}
       />
     </View>
+    </ImageBackground>
   );
 }
 
