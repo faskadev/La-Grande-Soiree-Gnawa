@@ -7,7 +7,7 @@ async function seedEvents() {
       description: "A magical night celebrating traditional and modern Gnawa music in Agadir.",
       date: "2025-07-12",
       location: "Place Al Amal - Agadir",
-      bannerUrl: "https://example.com/banners/gnawa-night-1.jpg",
+      bannerUrl: "https://url-shortener.me/31JB",
       ticketPrice: 150.0
     },
     
