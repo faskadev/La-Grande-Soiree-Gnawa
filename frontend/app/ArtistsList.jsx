@@ -105,6 +105,7 @@ export default function ArtistsList() {
 
   const renderItem = ({ item }) => {
     return (
+      
       <TouchableOpacity style={styles.card} onPress={() => openArtist(item)}>
         <Image
           source={
@@ -152,6 +153,7 @@ export default function ArtistsList() {
         <TouchableOpacity onPress={() => refetch()} style={styles.retryBtn}>
           <Text style={styles.retryText}>Retry</Text>
         </TouchableOpacity>
+        
       </View>
     );
   }
@@ -161,7 +163,9 @@ export default function ArtistsList() {
     source={require("../assets/images/background.png")}
     style={styles.bg}
     resizeMode="cover">
+      
     <View style={styles.container}>
+      
       <FlatList
         data={artists || []}
         keyExtractor={(i) => String(i.id)}
@@ -185,14 +189,15 @@ export default function ArtistsList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ddc5c5ff",
-    marginTop: 10,
+    // backgroundColor: "#ddc5c5ff",
+    marginTop: 20,
   },
   center: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
+  
   card: {
     flexDirection: "row",
     alignItems: "center",

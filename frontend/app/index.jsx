@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  Alert,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -24,59 +25,57 @@ export default function Home() {
     );
   }
 
-return (
-  <ImageBackground
-    source={require("../assets/images/background.png")}
-    style={styles.bg}
-    resizeMode="cover"
-  >
-    <ScrollView contentContainerStyle={styles.scrollContent}> 
-        
+  return (
+    <ImageBackground
+      source={require("../assets/images/background.png")}
+      style={styles.bg}
+      resizeMode="cover"
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <Image
           source={{ uri: events.bannerUrl }}
           style={styles.bannerUrl}
           resizeMode="cover"
         />
-   
+
         <Text style={styles.title}>{events.title}</Text>
+        
         <Text style={styles.desc}>{events.description}</Text>
 
-      <View style={styles.overlay}> 
-        <View style={styles.cardsContainer}>
-          <View style={styles.card}>
-            <Text style={styles.cardLabel}>📍 Lieu</Text>
-            <Text style={styles.cardValue}>{events.location}</Text>
+        <View style={styles.overlay}>
+          <View style={styles.cardsContainer}>
+            <View style={styles.card}>
+              <Text style={styles.cardLabel}>📍 Lieu</Text>
+              <Text style={styles.cardValue}>{events.location}</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.cardLabel}>📅 Date</Text>
+              <Text style={styles.cardValue}>{events.date}</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.cardLabel}>💰 Prix du ticket</Text>
+              <Text style={styles.cardValue}>{events.ticketPrice} MAD</Text>
+            </View>
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.cardLabel}>📅 Date</Text>
-            <Text style={styles.cardValue}>{events.date}</Text>
-          </View>
-
-          <View style={styles.card}>
-            <Text style={styles.cardLabel}>💰 Prix du ticket</Text>
-            <Text style={styles.cardValue}>{events.ticketPrice} MAD</Text>
-          </View>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => navigation.navigate("ArtistsList")}
+          >
+            <Text style={styles.btnText}>Découvrir les artistes</Text>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => navigation.navigate("ArtistsList")}
-        >
-          <Text style={styles.btnText}>Découvrir les artistes</Text>
-        </TouchableOpacity>
-
-      </View>
-    </ScrollView>
-  </ImageBackground>
-);
+      </ScrollView>
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
   scrollContent: {
     flex: 1,
     marginTop: 40,
-
   },
 
   bg: {
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   },
 
   overlay: {
-    backgroundColor: "#888f8d46", 
+    backgroundColor: "#888f8d46",
     padding: 16,
     alignItems: "center",
   },
